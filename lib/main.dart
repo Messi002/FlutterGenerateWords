@@ -14,12 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-    theme: ThemeData(          // Add the 5 lines from here... 
+      theme: ThemeData(
+        // Add the 5 lines from here...
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
         ),
-      ), 
+      ),
       home: const randomWords(),
     );
   }
@@ -27,9 +28,6 @@ class MyApp extends StatelessWidget {
 
 class randomWords extends StatefulWidget {
   const randomWords({Key? key}) : super(key: key);
-
-
-
 
   @override
   State<randomWords> createState() => _randomWordsState();
@@ -41,37 +39,19 @@ class _randomWordsState extends State<randomWords> {
   final _biggerFont = const TextStyle(fontSize: 18);
 
   void _pushSaved() {
-    Navigator.of(context).push(
-      // Add lines from here...
-      MaterialPageRoute<void>(
-        builder: (context) {
+    Navigator.of(context).push( MaterialPageRoute<void>( builder: (context) {
           final tiles = _saved.map(
-            (pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final divided = tiles.isNotEmpty
-              ? ListTile.divideTiles(
-                  context: context,
-                  tiles: tiles,
-                ).toList()
-              : <Widget>[];
-
+            (pared) { return ListTile(title: Text( pared.asPascalCase,style: _biggerFont,),);
+            },);
+          final divided = tiles.isNotEmpty ? ListTile.divideTiles(context: context, tiles: tiles,).toList(): <Widget>[];
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
+            appBar: AppBar(title: const Text('Saved Suggestions'),),
+            body: ListView(children: divided),);
         },
       ), // ...to here.
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
