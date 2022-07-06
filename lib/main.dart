@@ -43,7 +43,16 @@ class _randomWordsState extends State<randomWords> {
           final tiles = _saved.map(
             (pared) { return ListTile(title: Text( pared.asPascalCase,style: _biggerFont,),);
             },);
-          final divided = tiles.isNotEmpty ? ListTile.divideTiles(context: context, tiles: tiles,).toList(): <Widget>[];
+          final divided = tiles.isNotEmpty ? ListTile.divideTiles(context: context, tiles: tiles,).toList(): <Widget>[
+            Column(
+              children: const [
+                Center(
+                  heightFactor: 20,
+                  child: Text('You have NO selected Words', style: TextStyle(fontSize: 20),),
+                ),
+              ],
+            )
+          ];
           return Scaffold(
             appBar: AppBar(title: const Text('Saved Suggestions'),),
             body: ListView(children: divided),);
