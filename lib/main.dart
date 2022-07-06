@@ -1,69 +1,76 @@
-import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
+// Copyright 2018 The Flutter team. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
+import 'package:english_words/english_words.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+// #docregion MyApp
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // #docregion build
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-
-        primarySwatch: Colors.blue,
+      title: 'Startup Name Generator',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Startup Name Generator'),
+        ),
+        body: const Center(
+          child: RandomWords(),
+        ),
       ),
-      home: const MyHomePage(),
     );
   }
+  // #enddocregion build
 }
+// #enddocregion MyApp
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('English Words'),),
-      body: randomWords(),
-    );
-  }
-}
-
-
-
-class _randomWordsState extends State<randomWords> {
+// #docregion RWS-var
+class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18);
+  // #enddocregion RWS-var
+
+  // #docregion RWS-build
   @override
   Widget build(BuildContext context) {
+    // #docregion itemBuilder
     return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: _suggestions.length,
-        itemBuilder: (context, i){
-          if(i.isOdd) return const Divider();
-          final index = i ~/ 2;
-          if(index >= _suggestions.length){
-                _suggestions.addAll(generateWordPairs().take(5));
-          }
-          return new ListTile(
-            title: new Text(_suggestions[i].asPascalCase, style: _biggerFont,),
-          );
-        }
-    );
-  }
-}
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: /*1*/ (context, i) {
+        if (i.isOdd) return const Divider(); /*2*/
 
-class randomWords extends StatefulWidget {
-  const randomWords({Key? key}) : super(key: key);
+        final index = i ~/ 2; /*3*/
+        if (index >= _suggestions.length) {
+          _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+        }
+        // #docregion listTile
+        return ListTile(
+          title: Text(
+            _suggestions[index].asPascalCase,
+            style: _biggerFont,
+          ),
+        );
+        // #enddocregion listTile
+      },
+    );
+    // #enddocregion itemBuilder
+  }
+  // #enddocregion RWS-build
+  // #docregion RWS-var
+}
+// #enddocregion RWS-var
+
+class RandomWords extends StatefulWidget {
+  const RandomWords({super.key});
 
   @override
-  State<randomWords> createState() => _randomWordsState();
+  State<RandomWords> createState() => _RandomWordsState();
 }
-
